@@ -1,0 +1,68 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+heart_data = pd.read_csv(r"C:\Users\shiva\Downloads\heart.csv")
+
+heart_data.head()
+
+heart_data.tail()
+
+heart_data.shape
+
+heart_data.info()
+
+heart_data.isnull().sum()
+
+heart_data.describe()
+
+heart_data['target'].value_counts()
+
+here 1 --> Defective Heart
+
+2 --> Healthy Heart
+
+X = heart_data.drop(columns = 'target' , axis = 1)
+Y = heart_data['target']
+
+print(X)
+
+print(Y)
+
+X_train , X_test , Y_train , Y_test = train_test_split(X , Y , test_size = 0.2 , stratify = Y, random_state = 2)
+
+print(X.shape, X_train.shape , X_test.shape)
+
+model = LogisticRegression()
+
+model = LogisticRegression(solver='liblinear')
+model.fit(X_train , Y_train)
+
+X_train_prediction = model.predict(X_train)
+training_data_accuracy = accuracy_score(X_train_prediction , Y_train)
+
+print('Accuracy on Training data:',training_data_accuracy)
+
+X_test_prediction = model.predict(X_test)
+test_data_accuracy = accuracy_score(X_test_prediction , Y_test)
+
+print('Accuracy on Test data:',test_data_accuracy)
+
+input_data = (71,0,0,112,149,0,1,125,0,1.6,1,0,2)
+
+columns = ['age','sex','cp','trestbps','chol','fbs','restecg',
+'thalach','exang','oldpeak','slope','ca','thal']
+
+input_df = pd.DataFrame([input_data], columns=columns)
+
+Prediction = model.predict(input_df)
+print(Prediction)
+
+if (Prediction [0] == 0):
+print("The Person does not have a Heart Disease")
+else:
+print("The Person has Heart Disease")
+
+explain kro line by line ye progam
